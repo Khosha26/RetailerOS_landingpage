@@ -1,0 +1,161 @@
+/* ========================================
+   FEATURES PINNED SEQUENCE
+   ======================================== */
+.features__pinned-wrapper {
+    position: relative;
+    width: 100%;
+    height: 700px;
+    /* Viewport for the pinned content */
+    padding: 0;
+    /* Full viewport height for pinning */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* overflow: hidden;  May clip glow effects, careful */
+}
+
+/* 1. INTRO (Everything you need...) */
+.features__intro {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+    z-index: 2;
+}
+
+/* 2. SHOWCASE (Monitor + Info) - Initially Hidden */
+.features__showcase {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    /* Align content to bottom */
+    justify-content: space-between;
+    padding: 0 2% 15%;
+    /* Reduce side padding to 2%, add 15% bottom */
+    opacity: 0;
+    pointer-events: none;
+    z-index: 3;
+}
+
+/* Left Side: Monitor */
+.features__monitor {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateX(-100px);
+    /* Start from left */
+}
+
+.monitor-frame {
+    width: 100%;
+    max-width: 600px;
+    aspect-ratio: 16/10;
+    background: #f0f0f0;
+    /* Light/Silver frame for clean look */
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    box-shadow: 0 30px 60px -10px rgba(0, 0, 0, 0.2), 0 10px 20px -5px rgba(0, 0, 0, 0.1);
+    /* Deep shadow */
+    padding: 12px;
+    position: relative;
+}
+
+.monitor-screen {
+    width: 100%;
+    height: 100%;
+    background: #111;
+    /* Dark screen */
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.monitor-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+}
+
+.m-icon {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: #fff;
+    transition: transform 0.3s ease;
+    aspect-ratio: 1;
+}
+
+.m-icon:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+/* Right Side: Info */
+.features__info {
+    width: 45%;
+    padding-left: 40px;
+    opacity: 0;
+    transform: translateX(50px);
+}
+
+.features__info .section-title {
+    text-align: left;
+    margin-bottom: 20px;
+    font-size: 3rem;
+    line-height: 1.1;
+    color: #111;
+    /* Always dark here as we are in white theme */
+}
+
+.features__info .section-desc {
+    text-align: left;
+    margin-bottom: 30px;
+    font-size: 1.2rem;
+    color: #555;
+    max-width: 400px;
+    margin-left: 0;
+    margin-right: auto;
+}
+
+.features__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.features__list li {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    color: #333;
+    font-weight: 500;
+}
+
+.features__list li::before {
+    content: '✓';
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: #000;
+    color: #fff;
+    border-radius: 50%;
+    font-size: 14px;
+    margin-right: 12px;
+}

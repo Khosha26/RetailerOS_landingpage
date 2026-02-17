@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RetailerOS — The Operating System for Modern Retail</title>
+  <meta name="description"
+    content="RetailerOS is the all-in-one retail management platform that unifies your inventory, sales, marketing, and operations into a single intelligent system." />
+  <link rel="icon" type="image/png" href="/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+
+<body>
+  <!-- ========== SVG FILTERS ========== -->
+  <svg width="0" height="0" style="position: absolute; pointer-events: none; z-index: -1;">
+    <defs>
+      <filter id="luma-key-shadow" x="-50%" y="-50%" width="200%" height="200%">
+        <!-- 1. Calculate Luminance to Alpha (Black = Transparent) -->
+        <feColorMatrix type="luminanceToAlpha" in="SourceGraphic" result="luma" />
+        <!-- 2. Threshold Alpha (Make all non-black pixels fully opaque) -->
+        <feComponentTransfer in="luma" result="opaqueAlpha">
+          <!-- Adjusted slope/intercept to catch darker blues and make them solid -->
+          <feFuncA type="linear" slope="30" intercept="-0.5" />
+        </feComponentTransfer>
+        <!-- 3. Mask Source with Generated Alpha -->
+        <feComposite in="SourceGraphic" in2="opaqueAlpha" operator="in" result="masked" />
+        <!-- 4. Add Drop Shadow to make White Icons visible on White BG -->
+        <feDropShadow in="masked" dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.25"
+          result="shadow" />
+        <!-- 5. Merge Shadow and Icon -->
+        <feMerge>
+          <feMergeNode in="shadow" />
+          <feMergeNode in="masked" />
+        </feMerge>
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- ========== NOISE OVERLAY ========== -->
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <!-- ========== NAVIGATION ========== -->
+  <nav class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="#" class="nav__logo" id="nav-logo">
+        <img src="/logo.png" alt="RetailerOS" class="nav__logo-img" />
+        <span class="nav__logo-text">Retailer<span class="nav__logo-accent">OS</span></span>
+      </a>
+      <div class="nav__links" id="nav-links">
+        <a href="#features" class="nav__link">Features</a>
+        <a href="#modules" class="nav__link">Modules</a>
+        <a href="#how-it-works" class="nav__link">How it Works</a>
+        <a href="#pricing" class="nav__link">Pricing</a>
+      </div>
+      <div class="nav__actions">
+        <a href="#pricing" class="nav__cta" id="nav-cta">Get Started</a>
+        <button class="nav__hamburger" id="nav-hamburger" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile menu -->
+    <div class="nav__mobile-menu" id="nav-mobile-menu">
+      <a href="#features" class="nav__mobile-link">Features</a>
+      <a href="#modules" class="nav__mobile-link">Modules</a>
+      <a href="#how-it-works" class="nav__mobile-link">How it Works</a>
+      <a href="#pricing" class="nav__mobile-link">Pricing</a>
+      <a href="#pricing" class="nav__mobile-cta">Get Started</a>
+    </div>
+  </nav>
+
+  <!-- ========== IMMERSIVE SCROLL WRAPPER ========== -->
+  <div id="immersive-wrapper">
+    <canvas id="frame-canvas" class="immersive-canvas"></canvas>
+
+    <!-- Hero Content (Starts visible, scales/fades out) -->
+    <section class="hero" id="hero">
+      <div class="hero__content">
+        <div class="hero__badge" id="hero-badge">
+          <span class="hero__badge-dot"></span>
+          Now Available — v2.0 Launch
+        </div>
+        <h1 class="hero__title" id="hero-title">
+          The Operating System<br />
+          for <span class="hero__title-gradient">Modern Retail</span>
+        </h1>
+        <p class="hero__subtitle" id="hero-subtitle">
+          Unify inventory, sales, marketing & operations into one intelligent platform.<br class="hero__br-desktop" />
+          Built for retailers who refuse to settle.
+        </p>
+        <div class="hero__cta-group" id="hero-cta-group">
+          <a href="#pricing" class="btn btn--primary" id="hero-cta-primary">
+            <span>Start Free Trial</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </a>
+          <a href="#how-it-works" class="btn btn--ghost" id="hero-cta-secondary">
+            <span>See How It Works</span>
+          </a>
+        </div>
+        <div class="hero__stats" id="hero-stats">
+          <div class="hero__stat">
+            <span class="hero__stat-number">2,500+</span>
+            <span class="hero__stat-label">Retailers</span>
+          </div>
+          <div class="hero__stat-divider"></div>
+          <div class="hero__stat">
+            <span class="hero__stat-number">18</span>
+            <span class="hero__stat-label">Modules</span>
+          </div>
+          <div class="hero__stat-divider"></div>
+          <div class="hero__stat">
+            <span class="hero__stat-number">99.9%</span>
+            <span class="hero__stat-label">Uptime</span>
+          </div>
+        </div>
+      </div>
+
+
+    </section>
+
+    <!-- Narrative overlays (Appear during scroll) -->
+    <div class="scroll-animation__overlay" id="overlay-1">
+      <span class="scroll-animation__overlay-tag">The Foundation</span>
+      <h2 class="scroll-animation__overlay-title">Built on Intelligence</h2>
+      <p class="scroll-animation__overlay-desc">Every module connects to a unified data core — giving you real-time
+        visibility across your entire operation.</p>
+    </div>
+    <div class="scroll-animation__overlay" id="overlay-2">
+      <span class="scroll-animation__overlay-tag">Total Integration</span>
+      <h2 class="scroll-animation__overlay-title">16 Modules. One System.</h2>
+      <p class="scroll-animation__overlay-desc">From inventory to marketing, from sales desk to automation — every tool
+        a retailer needs, unified.</p>
+    </div>
+
+    <!-- Theme Transition Overlay (Bridge from Dark to Light) -->
+    <div class="hero-transition-overlay" id="theme-transition"></div>
+
+    <!-- Final Transition Content (Appears on White during fade) -->
+
+  </div>
+
+
+
+  </div>
+
+  <!-- ========== FEATURES SECTION ========== -->
+  <section class="features" id="features">
+    <div class="container">
+      <div class="features__pinned-wrapper" id="features-pin">
+        <!-- 1. INTRO (Everything you need...) -->
+        <div class="features__intro" id="features-intro">
+          <span class="section-tag" id="features-tag">Why RetailerOS</span>
+          <h2 class="section-title" id="features-title">Everything you need.<br /><span class="gradient-text">Nothing
+              you don't.</span></h2>
+          <p class="section-desc" id="features-desc">Replaces individual tools with one unified platform that actually
+            talks to itself.</p>
+        </div>
+      </div>
+
+      <!-- 2. SHOWCASE (Modules + Details - Hidden initially) -->
+      <div class="features__showcase" id="features-showcase"
+        style="position: absolute; width: 100%; top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; align-items: center; justify-content: space-between; gap: 80px; opacity: 0; pointer-events: none;">
+
+        <!-- LEFT: Modules Images / Monitor -->
+        <div class="features__monitor-wrap" style="flex: 1; transform: translateX(-100px); opacity: 0;">
+          <div class="monitor-frame"
+            style="width: 100%; max-width: 500px; aspect-ratio: 16/10; background: #000; border: 8px solid #333; border-radius: 12px; position: relative; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
+            <div class="monitor-screen"
+              style="width: 100%; height: 100%; background: #1a1a1a; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 20px; place-items: center;">
+              <!-- Icons -->
+              <div style="font-size: 24px;">🔔</div>
+              <div style="font-size: 24px;">💼</div>
+              <div style="font-size: 24px;">👥</div>
+              <div style="font-size: 24px;">❓</div>
+              <div style="font-size: 24px;">🏪</div>
+              <div style="font-size: 24px;">📦</div>
+              <div style="font-size: 24px;">🔧</div>
+              <div style="font-size: 24px;">📑</div>
+              <div style="font-size: 24px;">🧑‍💼</div>
+              <div style="font-size: 24px;">🛒</div>
+              <div style="font-size: 24px;">⚡</div>
+              <div style="font-size: 24px;">💰</div>
+              <div style="font-size: 24px;">📊</div>
+              <div style="font-size: 24px;">📣</div>
+              <div style="font-size: 24px;">✅</div>
+              <div style="font-size: 24px;">⚙️</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Details -->
+        <div class="features__details-wrap"
+          style="flex: 1; text-align: left; transform: translateX(100px); opacity: 0;">
+          <span class="section-tag"
+            style="background: rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.1); color: #333;">Total Control</span>
+          <h2 class="section-title" style="font-size: 48px; line-height: 1.1; margin: 16px 0;">All your
+            tools.<br /><span class="gradient-text">One Screen.</span></h2>
+          <p class="section-desc"
+            style="font-size: 18px; color: #666; margin-bottom: 24px; text-align: left; max-width: 400px;">
+            Manage inventory, sales, customers, and operations from a single powerful dashboard.
+          </p>
+          <ul
+            style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px; font-weight: 500; font-size: 16px; color: #333;">
+            <li style="display: flex; align-items: center; gap: 10px;"><span style="color: #000;">✓</span> Unified
+              Ecosystem</li>
+            <li style="display: flex; align-items: center; gap: 10px;"><span style="color: #000;">✓</span> Real-time
+              Sync</li>
+            <li style="display: flex; align-items: center; gap: 10px;"><span style="color: #000;">✓</span> Zero
+              Maintenance</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <!-- ========== MODULES SECTION ========== -->
+  <section class="modules" id="modules">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag" id="modules-tag">Core Modules</span>
+        <h2 class="section-title" id="modules-title">18 Modules.<br /><span class="gradient-text">Infinite
+            Possibilities.</span></h2>
+        <p class="section-desc" id="modules-desc">Every aspect of retail, covered. Activate what you need, when you need
+          it.</p>
+      </div>
+      <div class="modules__grid" id="modules-grid">
+        <div class="module-card" id="module-1">
+          <div class="module-card__icon">🔔</div>
+          <span class="module-card__name">Alerts</span>
+        </div>
+        <div class="module-card" id="module-2">
+          <div class="module-card__icon">💼</div>
+          <span class="module-card__name">Sales Desk</span>
+        </div>
+        <div class="module-card" id="module-3">
+          <div class="module-card__icon">👥</div>
+          <span class="module-card__name">Clients</span>
+        </div>
+        <div class="module-card" id="module-4">
+          <div class="module-card__icon">❓</div>
+          <span class="module-card__name">Enquiries</span>
+        </div>
+        <div class="module-card" id="module-5">
+          <div class="module-card__icon">🏪</div>
+          <span class="module-card__name">My Store</span>
+        </div>
+        <div class="module-card" id="module-6">
+          <div class="module-card__icon">📦</div>
+          <span class="module-card__name">Inventory</span>
+        </div>
+        <div class="module-card" id="module-7">
+          <div class="module-card__icon">🔧</div>
+          <span class="module-card__name">Repairs</span>
+        </div>
+        <div class="module-card" id="module-8">
+          <div class="module-card__icon">📑</div>
+          <span class="module-card__name">Pre-Documents</span>
+        </div>
+        <div class="module-card" id="module-9">
+          <div class="module-card__icon">🧑‍💼</div>
+          <span class="module-card__name">Promoters</span>
+        </div>
+        <div class="module-card" id="module-10">
+          <div class="module-card__icon">🛒</div>
+          <span class="module-card__name">Marketplace</span>
+        </div>
+        <div class="module-card" id="module-11">
+          <div class="module-card__icon">⚡</div>
+          <span class="module-card__name">Automation</span>
+        </div>
+        <div class="module-card" id="module-12">
+          <div class="module-card__icon">💰</div>
+          <span class="module-card__name">Schemes</span>
+        </div>
+        <div class="module-card" id="module-13">
+          <div class="module-card__icon">📊</div>
+          <span class="module-card__name">Reports</span>
+        </div>
+        <div class="module-card" id="module-14">
+          <div class="module-card__icon">📣</div>
+          <span class="module-card__name">Marketing</span>
+        </div>
+        <div class="module-card" id="module-15">
+          <div class="module-card__icon">✅</div>
+          <span class="module-card__name">Claims</span>
+        </div>
+        <div class="module-card" id="module-16">
+          <div class="module-card__icon">⚙️</div>
+          <span class="module-card__name">Settings</span>
+        </div>
+        <div class="module-card" id="module-17">
+          <div class="module-card__icon">🌐</div>
+          <span class="module-card__name">eComStore</span>
+        </div>
+        <div class="module-card" id="module-18">
+          <div class="module-card__icon">📱</div>
+          <span class="module-card__name">Mobile App</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== HOW IT WORKS SECTION ========== -->
+  <section class="how-it-works" id="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag" id="hiw-tag">How It Works</span>
+        <h2 class="section-title" id="hiw-title">Up and running<br /><span class="gradient-text">in minutes, not
+            months.</span></h2>
+      </div>
+      <div class="hiw__steps" id="hiw-steps">
+        <div class="hiw__step" id="hiw-step-1">
+          <div class="hiw__step-number">01</div>
+          <div class="hiw__step-content">
+            <h3 class="hiw__step-title">Sign Up & Configure</h3>
+            <p class="hiw__step-desc">Create your account, add your store details, and configure your business rules.
+              Takes about 10 minutes.</p>
+          </div>
+        </div>
+        <div class="hiw__step-connector"></div>
+        <div class="hiw__step" id="hiw-step-2">
+          <div class="hiw__step-number">02</div>
+          <div class="hiw__step-content">
+            <h3 class="hiw__step-title">Import & Activate</h3>
+            <p class="hiw__step-desc">Import your existing data — products, clients, inventory. Activate the modules you
+              need.</p>
+          </div>
+        </div>
+        <div class="hiw__step-connector"></div>
+        <div class="hiw__step" id="hiw-step-3">
+          <div class="hiw__step-number">03</div>
+          <div class="hiw__step-content">
+            <h3 class="hiw__step-title">Go Live & Grow</h3>
+            <p class="hiw__step-desc">Start selling from day one. Use real-time analytics to optimize and scale your
+              retail business.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PRICING SECTION ========== -->
+  <section class="pricing" id="pricing">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag" id="pricing-tag">Pricing</span>
+        <h2 class="section-title" id="pricing-title">Simple pricing.<br /><span class="gradient-text">No hidden
+            fees.</span></h2>
+        <p class="section-desc" id="pricing-desc">Start free. Scale as you grow. Cancel anytime.</p>
+      </div>
+      <div class="pricing__grid" id="pricing-grid">
+        <div class="pricing-card" id="pricing-starter">
+          <div class="pricing-card__header">
+            <h3 class="pricing-card__name">Starter</h3>
+            <p class="pricing-card__desc">For single-store retailers getting started</p>
+          </div>
+          <div class="pricing-card__price">
+            <span class="pricing-card__amount">₹999</span>
+            <span class="pricing-card__period">/month</span>
+          </div>
+          <ul class="pricing-card__features">
+            <li>Up to 5 modules</li>
+            <li>1 Store location</li>
+            <li>Basic analytics</li>
+            <li>Email support</li>
+            <li>1,000 SKUs</li>
+          </ul>
+          <a href="#" class="btn btn--outline pricing-card__cta" id="pricing-starter-cta">Start Free Trial</a>
+        </div>
+        <div class="pricing-card pricing-card--featured" id="pricing-pro">
+          <div class="pricing-card__popular">Most Popular</div>
+          <div class="pricing-card__header">
+            <h3 class="pricing-card__name">Professional</h3>
+            <p class="pricing-card__desc">For growing retail businesses</p>
+          </div>
+          <div class="pricing-card__price">
+            <span class="pricing-card__amount">₹2,499</span>
+            <span class="pricing-card__period">/month</span>
+          </div>
+          <ul class="pricing-card__features">
+            <li>All 18 modules</li>
+            <li>Up to 5 store locations</li>
+            <li>Advanced analytics & reports</li>
+            <li>Priority support</li>
+            <li>Unlimited SKUs</li>
+            <li>API access</li>
+          </ul>
+          <a href="#" class="btn btn--primary pricing-card__cta" id="pricing-pro-cta">Start Free Trial</a>
+        </div>
+        <div class="pricing-card" id="pricing-enterprise">
+          <div class="pricing-card__header">
+            <h3 class="pricing-card__name">Enterprise</h3>
+            <p class="pricing-card__desc">For large-scale retail operations</p>
+          </div>
+          <div class="pricing-card__price">
+            <span class="pricing-card__amount">Custom</span>
+          </div>
+          <ul class="pricing-card__features">
+            <li>Everything in Professional</li>
+            <li>Unlimited locations</li>
+            <li>Custom integrations</li>
+            <li>Dedicated account manager</li>
+            <li>SLA guarantee</li>
+            <li>On-premise option</li>
+          </ul>
+          <a href="#" class="btn btn--outline pricing-card__cta" id="pricing-enterprise-cta">Contact Sales</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CTA SECTION ========== -->
+  <section class="final-cta" id="final-cta">
+    <div class="container">
+      <div class="final-cta__content">
+        <h2 class="final-cta__title" id="final-cta-title">Ready to transform<br />your retail business?</h2>
+        <p class="final-cta__desc" id="final-cta-desc">Join 2,500+ retailers already running on RetailerOS.</p>
+        <a href="#pricing" class="btn btn--primary btn--large" id="final-cta-btn">
+          <span>Get Started for Free</span>
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a href="#" class="footer__logo">
+            <img src="/logo.png" alt="RetailerOS" class="footer__logo-img" />
+            <span class="footer__logo-text">Retailer<span class="nav__logo-accent">OS</span></span>
+          </a>
+          <p class="footer__tagline">The Operating System<br />for Modern Retail.</p>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__col-title">Product</h4>
+          <a href="#features" class="footer__link">Features</a>
+          <a href="#modules" class="footer__link">Modules</a>
+          <a href="#pricing" class="footer__link">Pricing</a>
+          <a href="#" class="footer__link">Integrations</a>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__col-title">Company</h4>
+          <a href="#" class="footer__link">About</a>
+          <a href="#" class="footer__link">Blog</a>
+          <a href="#" class="footer__link">Careers</a>
+          <a href="#" class="footer__link">Contact</a>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__col-title">Support</h4>
+          <a href="#" class="footer__link">Documentation</a>
+          <a href="#" class="footer__link">Help Center</a>
+          <a href="#" class="footer__link">Status</a>
+          <a href="#" class="footer__link">API Reference</a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span class="footer__copyright">© 2026 RetailerOS. All rights reserved.</span>
+        <div class="footer__bottom-links">
+          <a href="#" class="footer__bottom-link">Privacy</a>
+          <a href="#" class="footer__bottom-link">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
+</html>
